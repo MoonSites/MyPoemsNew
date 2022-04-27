@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">My Poems</string>
+    <string name="enterPass">Введите пароль</string>
+    <string name="lock">замОк</string>
+    <string name="newPasswordTitle">Придумайте пароль</string>
+    <string name="errorIncorrectNewPassword">Пароль может состоять только из цифр!</string>
+    <string name="settings">Настройки</string>
+    <string name="create_poem">Создать новый стих</string>
+    <string name="poemName">Название</string>
+    <string name="epigraf">Эпиграф?</string>
+    <string name="text">Текст</string>
+    <string name="autor">Автор:</string>
+    <string name="other">Для заметок:</string>
+    <string name="edit_poem">Редактировать текст</string>
+    <string name="copy_poem">Скопировать текст</string>
+    <string name="delete_poem">Удалить стихотворение</string>
+</resources>

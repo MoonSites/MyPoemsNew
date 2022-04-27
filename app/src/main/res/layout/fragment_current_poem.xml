@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/title"
+                style="@style/EDasTextView"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:hint="@string/poemName"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textSize="20sp"
+                android:importantForAutofill="no" />
+
+            <EditText
+                android:id="@+id/epigraf"
+                style="@style/EDasTextView"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="end"
+                android:hint="@string/epigraf"
+                android:inputType="textMultiLine|textCapSentences"
+                android:textStyle="italic"
+                android:importantForAutofill="no" />
+
+            <EditText
+                android:id="@+id/text"
+                style="@style/EDasTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/text"
+                android:inputType="textMultiLine|textCapSentences"
+                android:importantForAutofill="no" />
+
+
+            <EditText
+                android:id="@+id/autor"
+                style="@style/EDasTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:hint="@string/autor"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:importantForAutofill="no" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@null" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:src="?colorOnBackground" />
+
+            <EditText
+                android:id="@+id/dop"
+                style="@style/EDasTextView"
+                android:hint="@string/other"
+                android:inputType="textMultiLine|textCapSentences"
+                android:importantForAutofill="no" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="?colorOnBackground" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/btnDelete"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:contentDescription="@string/delete_poem"
+            app:srcCompat="@drawable/ic_delete" />
+
+        <ImageButton
+            android:id="@+id/btnCopy"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/copy_poem"
+            app:srcCompat="@drawable/ic_copy" />
+
+        <ImageButton
+            android:id="@+id/btnChangeViewMode"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/edit_poem"
+            app:srcCompat="@drawable/ic_edit" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

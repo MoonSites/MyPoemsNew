@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="windowBackground">#E3F2FD</color>
+    <color name="poemBackground">#1A80D8FF</color>
+    <color name="primary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976d2</color>
+    <color name="spinnerBackColor">#42A5F5</color>
+    <color name="shadowColor">#1B79A8</color>
+    <color name="EDcolor">#000000</color>
+    <color name="spinner">#E0F7FA</color>
+    <!--<color title="text_color_secondary">#89f14d4d</color>-->
+    <color name="navigationBar">#0d47a1</color>
+    <color name="accent">#2196F3</color>
+    <color name="background">#E1F5FE</color>
+
+    <color name="loginButtonTextColor">#000</color>
+    <color name="buttonShapeColor">#303F9F</color>
+
+    <color name="poemButtonsColor">#37474F</color>
+
+</resources>
