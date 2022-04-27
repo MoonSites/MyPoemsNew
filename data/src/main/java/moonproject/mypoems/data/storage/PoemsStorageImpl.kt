@@ -1,7 +1,9 @@
 package moonproject.mypoems.data.storage
 
+import io.realm.Case
 import io.realm.Realm
 import io.realm.RealmList
+import io.realm.Sort
 import io.realm.kotlin.toFlow
 import io.realm.kotlin.where
 import kotlinx.coroutines.cancel
@@ -18,12 +20,19 @@ class PoemsStorageImpl(
     private val realmMapper: PoemsToRealmMapper
 ) : PoemsStorage {
 
-    override fun getAllPoems(): Flow<List<PoemField>> {
-        return realm.where<PoemFieldRealm>().findAll().toFlow()
+    override fun getAllPoems(sort: Sort, filterFieldName: String, filterFieldValue: String): Flow<List<PoemField>> {
+        val query = realm.where<PoemFieldRealm>()
+            .sort(PoemFieldRealm::id.name, sort)
+
+        if (filterFieldValue.isNotEmpty()) {
+            query.contains(filterFieldName, filterFieldValue, Case.INSENSITIVE)
+        }
+
+        return query.findAll().toFlow()
     }
 
     override fun getPoemById(id: Int): PoemField {
-        return PoemFieldRealm(0, "f", RealmList())
+        return PoemFieldRealm(0, "f", RealmList(), "", "")
     }
 
     override fun saveNewPoem(poem: PoemField): Flow<String> = callbackFlow {

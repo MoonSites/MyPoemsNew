@@ -11,9 +11,12 @@ internal open class PoemFieldRealm(
     @PrimaryKey
     override var id: Long,
     override var author: String,
-    var poemsRealm: RealmList<PoemDataRealm>
+    var poemsRealm: RealmList<PoemDataRealm>,
+
+    override var currentTitle: String,
+    override var currentFirstLine: String
 ) : RealmObject(), PoemField {
-    constructor() : this(0L, "", RealmList())
+    constructor() : this(0L, "", RealmList(), "", "")
 
     @Deprecated("List don't supports by realm", ReplaceWith("poemsRealm"))
     @Ignore
@@ -35,15 +38,21 @@ internal open class PoemDataRealm(
 class PoemsToRealmMapper {
 
     internal fun mapToRealm(poemField: PoemField): PoemFieldRealm {
-        val poems = RealmList<PoemDataRealm>()
+        val poemsRealm = RealmList<PoemDataRealm>()
 
         poemField.poems.forEach {
-            poems.add(
+            poemsRealm.add(
                 mapPoemDataToRealm(it)
             )
         }
 
-        return PoemFieldRealm(poemField.id, poemField.author, poems)
+        return PoemFieldRealm(
+            id = poemField.id,
+            author = poemField.author,
+            poemsRealm = poemsRealm,
+            currentTitle = poemField.currentTitle,
+            currentFirstLine = poemField.currentFirstLine
+        )
     }
 
     private fun mapPoemDataToRealm(poemData: PoemData): PoemDataRealm = PoemDataRealm(

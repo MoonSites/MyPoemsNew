@@ -12,4 +12,22 @@ interface PoemField {
     var id: Long
     var author: String
     var poems: List<PoemData>
+
+    var currentTitle: String
+    var currentFirstLine: String
+}
+
+data class GetPoemsParams(
+    val sorting: Sorting,
+    val filterField: FilterField = FilterField.Title,
+    val filterText: String = ""
+) {
+    enum class Sorting {
+        ASCENDING, DESCENDING
+    }
+
+    enum class FilterField(val fieldName: String) {
+        Title(PoemField::currentTitle.name),
+        FirstLine(PoemField::currentFirstLine.name),
+    }
 }

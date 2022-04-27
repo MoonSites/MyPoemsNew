@@ -8,9 +8,12 @@
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
-<!--    <item-->
-<!--        android:id="@+id/action_search_type"-->
-<!--        android:title="@string/pref_search_type"/>-->
+    <item
+        android:id="@+id/menuItemSearchType"
+        android:title="Тип поиска"/>
+    <item
+        android:id="@+id/menuItemSorting"
+        android:title="Сортировка"/>
 
     <item
         android:id="@+id/menuItemSettings"
