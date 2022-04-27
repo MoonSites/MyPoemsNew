@@ -72,6 +72,7 @@ class LoginActivity : AppCompatActivity() {
     private fun showCreateNewPasswordDialog() {
         val dialog = MaterialAlertDialogBuilder(this)
             .setTitle(R.string.newPasswordTitle)
+            .setCancelable(false)
             .setView(R.layout.dialog_login_new_password)
             .setPositiveButton(android.R.string.ok, null)
             .show()

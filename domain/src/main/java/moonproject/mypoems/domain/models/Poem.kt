@@ -1,15 +1,15 @@
 package moonproject.mypoems.domain.models
 
-data class PoemData(
-    val title: String,
-    val epigraph: String,
-    val text: String,
-    val additionalText: String,
-    val timestamp: Long,
-)
+interface PoemData {
+    var title: String
+    var epigraph: String
+    var text: String
+    var additionalText: String
+    var timestamp: Long
+}
 
-data class PoemField(
-    val id: Long,
-    val author: String,
-    val poems: List<PoemData>,
-)
+interface PoemField {
+    var id: Long
+    var author: String
+    var poems: List<PoemData>
+}

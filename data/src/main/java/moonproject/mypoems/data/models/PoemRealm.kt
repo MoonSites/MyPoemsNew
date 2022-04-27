@@ -2,71 +2,56 @@ package moonproject.mypoems.data.models
 
 import io.realm.RealmList
 import io.realm.RealmObject
+import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import moonproject.mypoems.domain.models.PoemData
 import moonproject.mypoems.domain.models.PoemField
 
-open class PoemFieldRealm(
+internal open class PoemFieldRealm(
     @PrimaryKey
-    var id: Long,
-    var author: String,
-    var poems: RealmList<PoemDataRealm>,
-) : RealmObject() {
+    override var id: Long,
+    override var author: String,
+    var poemsRealm: RealmList<PoemDataRealm>
+) : RealmObject(), PoemField {
     constructor() : this(0L, "", RealmList())
+
+    @Deprecated("List don't supports by realm", ReplaceWith("poemsRealm"))
+    @Ignore
+    override var poems: List<PoemData> = poemsRealm
+
 }
 
-open class PoemDataRealm(
-    var title: String,
-    var epigraph: String,
-    var text: String,
-    var additionalText: String,
-    var timestamp: Long,
-) : RealmObject() {
+internal open class PoemDataRealm(
+    override var title: String,
+    override var epigraph: String,
+    override var text: String,
+    override var additionalText: String,
+    override var timestamp: Long,
+) : RealmObject(), PoemData {
     constructor() : this("", "", "", "", 0L)
 }
 
-class PoemsMapper() {
 
-    fun mapFieldToRealm(obj: PoemField): PoemFieldRealm = PoemFieldRealm(
-        obj.id,
-        obj.author,
-        mapPoemDataToRealm(obj.poems),
-    )
+class PoemsToRealmMapper {
 
-    fun mapFieldToDomain(obj: PoemFieldRealm): PoemField = PoemField(
-        obj.id,
-        obj.author,
-        mapRealmToPoemData(obj.poems),
-    )
+    internal fun mapToRealm(poemField: PoemField): PoemFieldRealm {
+        val poems = RealmList<PoemDataRealm>()
 
-    fun mapDataToRealm(poemData: PoemData): PoemDataRealm = PoemDataRealm(
-        title = poemData.title,
-        epigraph = poemData.epigraph,
-        text = poemData.text,
-        additionalText = poemData.additionalText,
-        timestamp = poemData.timestamp
-    )
-
-
-    private fun mapPoemDataToRealm(poems: List<PoemData>): RealmList<PoemDataRealm> {
-        val out = RealmList<PoemDataRealm>()
-
-        poems.forEach {
-            val mappedObj = mapDataToRealm(it)
-            out.add(mappedObj)
+        poemField.poems.forEach {
+            poems.add(
+                mapPoemDataToRealm(it)
+            )
         }
 
-        return out
+        return PoemFieldRealm(poemField.id, poemField.author, poems)
     }
 
-    private fun mapRealmToPoemData(poems: RealmList<PoemDataRealm>): List<PoemData> {
-        return poems.map { PoemData(
-            title = it.title,
-            epigraph = it.epigraph,
-            text = it.text,
-            additionalText = it.additionalText,
-            timestamp = it.timestamp
-        ) }
-    }
+    private fun mapPoemDataToRealm(poemData: PoemData): PoemDataRealm = PoemDataRealm(
+        poemData.title,
+        poemData.epigraph,
+        poemData.text,
+        poemData.additionalText,
+        poemData.timestamp,
+    )
 
 }

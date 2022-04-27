@@ -1,13 +1,13 @@
 package moonproject.mypoems.data.storage
 
 import kotlinx.coroutines.flow.Flow
-import moonproject.mypoems.data.models.PoemDataRealm
-import moonproject.mypoems.data.models.PoemFieldRealm
+import moonproject.mypoems.domain.models.PoemData
+import moonproject.mypoems.domain.models.PoemField
 
 interface PoemsStorage {
 
-    fun getAllPoems(): Flow<List<PoemFieldRealm>>
-    fun getPoemById(id: Int) : PoemFieldRealm
-    fun saveNewPoem(poem: PoemFieldRealm): Flow<String>
-    fun updatePoem(id: Int, poemDataRealm: PoemDataRealm)
+    fun getAllPoems(): Flow<List<PoemField>>
+    fun getPoemById(id: Int) : PoemField
+    fun saveNewPoem(poem: PoemField): Flow<String>
+    fun updatePoem(id: Int, poemData: PoemData)
 }
