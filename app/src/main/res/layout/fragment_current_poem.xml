@@ -28,7 +28,7 @@
                 android:importantForAutofill="no" />
 
             <EditText
-                android:id="@+id/epigraf"
+                android:id="@+id/epigraph"
                 style="@style/EDasTextView"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"

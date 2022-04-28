@@ -19,7 +19,7 @@ class PoemsRepoImpl(
         params.filterText
     )
 
-    override fun getPoemById(id: Int): PoemField = poemsStorage.getPoemById(id)
+    override fun getPoemById(id: Long): Flow<PoemField?> = poemsStorage.getPoemById(id)
 
     override fun saveNewPoem(poem: PoemField) = poemsStorage.saveNewPoem(poem)
 
@@ -27,6 +27,10 @@ class PoemsRepoImpl(
         id = id,
         poemData = poemData
     )
+
+    override fun getSearchPoemsParams(): GetPoemsParams = poemsStorage.getSearchPoemsParams()
+
+    override fun saveSearchPoemsParams(params: GetPoemsParams) = poemsStorage.saveSearchPoemsParams(params)
 
 
     private fun sortMap(sorting: GetPoemsParams.Sorting): Sort = when(sorting) {

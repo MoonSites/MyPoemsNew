@@ -19,6 +19,7 @@ val appModule = module {
     viewModel {
         MainViewModel(
             getSortedPoemsUseCase = get(),
+            searchPoemsParamsUseCase = get(),
             getCurrentPoemUseCase = get(),
             updatePoemUseCase = get(),
             domainToPresenterPoemMapper = DomainToPresenterPoemMapper()

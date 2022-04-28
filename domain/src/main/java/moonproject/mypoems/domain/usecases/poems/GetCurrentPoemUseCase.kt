@@ -1,11 +1,13 @@
 package moonproject.mypoems.domain.usecases.poems
 
+import kotlinx.coroutines.flow.Flow
 import moonproject.mypoems.domain.models.PoemField
+import moonproject.mypoems.domain.repo.PoemsRepo
 
-class GetCurrentPoemUseCase {
+class GetCurrentPoemUseCase(
+    private val poemsRepo: PoemsRepo
+) {
 
-    operator fun invoke(id: Int): PoemField? {
-        return null
-    }
+    operator fun invoke(id: Long): Flow<PoemField?> = poemsRepo.getPoemById(id)
 
 }

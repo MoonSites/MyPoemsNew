@@ -41,6 +41,7 @@ val dataModule = module {
 
     single<PoemsStorage> {
         PoemsStorageImpl(
+            context = get(),
             realm = get(),
             realmMapper = PoemsToRealmMapper())
     }

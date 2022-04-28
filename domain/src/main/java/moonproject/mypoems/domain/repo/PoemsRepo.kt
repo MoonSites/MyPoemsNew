@@ -8,8 +8,10 @@ import moonproject.mypoems.domain.models.PoemField
 interface PoemsRepo {
 
     fun getAllPoems(params: GetPoemsParams): Flow<List<PoemField>>
-    fun getPoemById(id: Int): PoemField
+    fun getPoemById(id: Long): Flow<PoemField?>
     fun saveNewPoem(poem: PoemField): Flow<String>
     fun updatePoem(id: Int, poemData: PoemData)
 
+    fun getSearchPoemsParams(): GetPoemsParams
+    fun saveSearchPoemsParams(params: GetPoemsParams)
 }

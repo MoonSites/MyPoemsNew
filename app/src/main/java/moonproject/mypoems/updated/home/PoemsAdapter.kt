@@ -9,10 +9,9 @@ import kotlinx.android.synthetic.main.item_list_poem.*
 import moonproject.mypoems.updated.R
 import moonproject.mypoems.updated.extensions.inflate
 import moonproject.mypoems.updated.extensions.onClick
-import moonproject.mypoems.updated.extensions.toast
 import moonproject.mypoems.updated.models.AdapterPoem
 
-class PoemsAdapter : RecyclerView.Adapter<PoemsAdapter.VH>() {
+class PoemsAdapter(private val onItemCLicked: (id: Long) -> Unit) : RecyclerView.Adapter<PoemsAdapter.VH>() {
 
 
     private val data = mutableListOf<AdapterPoem>()
@@ -25,7 +24,7 @@ class PoemsAdapter : RecyclerView.Adapter<PoemsAdapter.VH>() {
             poemFirstString.text = obj.firstLine
 
             containerView.onClick {
-                containerView.context.toast("id = ${obj.id}")
+                onItemCLicked(obj.id)
             }
         }
 

@@ -2,7 +2,6 @@ package moonproject.mypoems.data.models
 
 import io.realm.RealmList
 import io.realm.RealmObject
-import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import moonproject.mypoems.domain.models.PoemData
 import moonproject.mypoems.domain.models.PoemField
@@ -19,8 +18,7 @@ internal open class PoemFieldRealm(
     constructor() : this(0L, "", RealmList(), "", "")
 
     @Deprecated("List don't supports by realm", ReplaceWith("poemsRealm"))
-    @Ignore
-    override var poems: List<PoemData> = poemsRealm
+    override val poems: List<PoemData> get() = poemsRealm
 
 }
 

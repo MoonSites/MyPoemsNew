@@ -29,7 +29,7 @@ class PoemsListFragment : Fragment(R.layout.fragment_poems_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val adapter = PoemsAdapter()
+        val adapter = PoemsAdapter { id -> viewModel.openCurrentPoem(id) }
         val toolbarSearchView = (toolbar.menu.findItem(R.id.menuItemSearch).actionView as SearchView)
 
         poemsList.adapter = adapter
@@ -55,7 +55,7 @@ class PoemsListFragment : Fragment(R.layout.fragment_poems_list) {
         toolbarSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
-                viewModel.poemsFilterText.value = newText
+                viewModel.setFilterText(newText)
                 return false
             }
 
@@ -66,16 +66,15 @@ class PoemsListFragment : Fragment(R.layout.fragment_poems_list) {
             temp()
         }
 
-//        viewModel.poemsSorting.value
-//        viewModel.poemsFilterField
-//        viewModel.poemsFilterText.value = ""
-
-        viewModel.poemsFilterField.observe(viewLifecycleOwner) {
-            log("PoemsListFragment.viewModel.poemsFilterField", it.fieldName)
-        }
-
         viewModel.poemsList.observe(viewLifecycleOwner) {
             adapter.updateData(it)
+        }
+
+        viewModel.currentPoemId.observe(viewLifecycleOwner) {
+            log("viewModel.currentPoemId", it)
+        }
+        viewModel.currentPoem.observe(viewLifecycleOwner) {
+            log("viewModel.currentPoem", it)
         }
 
     }

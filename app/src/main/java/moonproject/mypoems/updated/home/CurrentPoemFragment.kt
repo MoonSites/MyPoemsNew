@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_current_poem.*
 import moonproject.mypoems.updated.R
+import moonproject.mypoems.updated.extensions.observe
 import moonproject.mypoems.updated.extensions.onClick
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -26,6 +27,19 @@ class CurrentPoemFragment : Fragment(R.layout.fragment_current_poem) {
 
         btnDelete.onClick {
 
+        }
+
+        viewModel.currentPoem.observe(viewLifecycleOwner) { poemField ->
+            poemField ?: return@observe     //show error //db error
+
+            val currentPoemData = poemField.poems.lastOrNull() ?: return@observe //list should be not empty     //so show error or smth else
+            title.setText(currentPoemData.title)
+            epigraph.setText(currentPoemData.epigraph)
+            autor.setText(poemField.author)
+
+            //poemField.poems to spinner
+
+            dop.setText(currentPoemData.additionalText)
         }
     }
 

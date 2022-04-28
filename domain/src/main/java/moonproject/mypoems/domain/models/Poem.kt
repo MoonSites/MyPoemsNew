@@ -11,7 +11,7 @@ interface PoemData {
 interface PoemField {
     var id: Long
     var author: String
-    var poems: List<PoemData>
+    val poems: List<PoemData>
 
     var currentTitle: String
     var currentFirstLine: String
@@ -23,11 +23,19 @@ data class GetPoemsParams(
     val filterText: String = ""
 ) {
     enum class Sorting {
-        ASCENDING, DESCENDING
+        ASCENDING, DESCENDING;
+
+        companion object {
+            val defaultValue = ASCENDING.name
+        }
     }
 
     enum class FilterField(val fieldName: String) {
         Title(PoemField::currentTitle.name),
-        FirstLine(PoemField::currentFirstLine.name),
+        FirstLine(PoemField::currentFirstLine.name);
+
+        companion object {
+            val defaultValue = Title.name
+        }
     }
 }
