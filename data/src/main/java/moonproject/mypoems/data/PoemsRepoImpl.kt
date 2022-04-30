@@ -23,10 +23,12 @@ class PoemsRepoImpl(
 
     override fun saveNewPoem(poem: PoemField) = poemsStorage.saveNewPoem(poem)
 
-    override fun updatePoem(id: Int, poemData: PoemData) = poemsStorage.updatePoem(
-        id = id,
-        poemData = poemData
+    override fun updatePoem(poem: PoemField, poemData: PoemData) = poemsStorage.updatePoem(
+        poem = poem,
+        newPoemData = poemData
     )
+
+    override fun deletePoem(id: Long): Flow<Boolean> = poemsStorage.deletePoem(id)
 
     override fun getSearchPoemsParams(): GetPoemsParams = poemsStorage.getSearchPoemsParams()
 

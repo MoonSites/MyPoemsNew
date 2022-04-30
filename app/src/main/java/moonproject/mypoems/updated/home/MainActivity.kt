@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         pager.adapter = FragmentsPagerAdapter(this)
         pager.isUserInputEnabled = false
+        pager.offscreenPageLimit = 1
         pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 log("pager.onPageSelected", position)
@@ -38,9 +39,13 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.currentPoem.observe(this) {
-            if (it != null) {
+        viewModel.currentPoemId.observe(this) {
+            log("MainActivity viewModel.currentPoem", it)
+
+            if (it != 0L) {
                 pager.setCurrentItem(FragmentsPagerAdapter.PAGE_POEM_VIEW, true)
+            } else {
+                pager.setCurrentItem(FragmentsPagerAdapter.PAGE_POEMS_LIST, true)
             }
         }
     }
@@ -48,7 +53,6 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (viewModel.isPoemOpened()) {
             viewModel.closeCurrentPoem()
-            pager.setCurrentItem(FragmentsPagerAdapter.PAGE_POEMS_LIST, true)
         } else {
             super.onBackPressed()
         }

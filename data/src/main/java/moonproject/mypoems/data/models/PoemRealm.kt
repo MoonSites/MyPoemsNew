@@ -53,7 +53,7 @@ class PoemsToRealmMapper {
         )
     }
 
-    private fun mapPoemDataToRealm(poemData: PoemData): PoemDataRealm = PoemDataRealm(
+    internal fun mapPoemDataToRealm(poemData: PoemData): PoemDataRealm = PoemDataRealm(
         poemData.title,
         poemData.epigraph,
         poemData.text,

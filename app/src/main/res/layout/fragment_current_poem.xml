@@ -19,13 +19,14 @@
             <EditText
                 android:id="@+id/title"
                 style="@style/EDasTextView"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
                 android:hint="@string/poemName"
+                android:importantForAutofill="no"
                 android:inputType="textCapWords"
                 android:maxLines="1"
-                android:textSize="20sp"
-                android:importantForAutofill="no" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/epigraph"
@@ -34,9 +35,9 @@
                 android:layout_marginEnd="10dp"
                 android:gravity="end"
                 android:hint="@string/epigraf"
+                android:importantForAutofill="no"
                 android:inputType="textMultiLine|textCapSentences"
-                android:textStyle="italic"
-                android:importantForAutofill="no" />
+                android:textStyle="italic" />
 
             <EditText
                 android:id="@+id/text"
@@ -45,8 +46,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="@string/text"
-                android:inputType="textMultiLine|textCapSentences"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine|textCapSentences" />
 
 
             <EditText
@@ -54,32 +55,38 @@
                 style="@style/EDasTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:gravity="end"
                 android:hint="@string/autor"
+                android:importantForAutofill="no"
                 android:inputType="textCapWords"
-                android:maxLines="1"
-                android:importantForAutofill="no" />
+                android:maxLines="1" />
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@null" />
 
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageView"
+                android:id="@+id/additionalTextDivider"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
                 android:src="?colorOnBackground" />
 
             <EditText
                 android:id="@+id/dop"
                 style="@style/EDasTextView"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="10dp"
                 android:hint="@string/other"
-                android:inputType="textMultiLine|textCapSentences"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine|textCapSentences" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -88,40 +95,55 @@
 
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/poemButtonsDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:src="?colorOnBackground" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <FrameLayout
+        android:id="@+id/poemButtonsParent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnDelete"
-            style="?attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
+            style="?attr/actionButtonStyle"
+            android:layout_width="56dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:contentDescription="@string/delete_poem"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_delete" />
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnCopy"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
+            style="?actionButtonStyle"
+            android:layout_width="56dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="60dp"
             android:contentDescription="@string/copy_poem"
             app:srcCompat="@drawable/ic_copy" />
 
-        <ImageButton
-            android:id="@+id/btnChangeViewMode"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnSave"
+            style="?actionButtonStyle"
+            android:layout_width="56dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="60dp"
+            android:contentDescription="@string/save"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_save" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnChangeViewMode"
+            style="?actionButtonStyle"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:contentDescription="@string/edit_poem"
             app:srcCompat="@drawable/ic_edit" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </FrameLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

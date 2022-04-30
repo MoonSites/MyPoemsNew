@@ -11,6 +11,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.map
 import moonproject.mypoems.data.models.PoemFieldRealm
 import moonproject.mypoems.data.models.PoemsToRealmMapper
 import moonproject.mypoems.domain.models.GetPoemsParams
@@ -36,34 +37,94 @@ class PoemsStorageImpl(
         return query.findAll().toFlow()
     }
 
-    override fun getPoemById(id: Long): Flow<PoemField?> = callbackFlow {
+    override fun getPoemById(id: Long): Flow<PoemField?> /*= callbackFlow*/ {
         val observable = realm.where<PoemFieldRealm>()
-            .equalTo("id", id)
+            .equalTo(PoemFieldRealm::id.name, id)
             .findFirstAsync()
 
-        observable.addChangeListener { obj: PoemFieldRealm?, _ ->
-            obj?.removeAllChangeListeners()
-            if (obj?.isValid == true) {
-                trySend(obj)
-            } else {
-                trySend(null)
-            }
+        return observable.toFlow().map {
+            if (it == null || !it.isValid) null
+            else it
         }
-
-        awaitClose { observable.removeAllChangeListeners() }
+//        observable.addChangeListener { obj: PoemFieldRealm?, _ ->
+//            obj?.removeAllChangeListeners()
+//            if (obj?.isValid == true) {
+//                trySend(obj)
+//            } else {
+//                trySend(null)
+//            }
+//        }
+//
+//        awaitClose { observable.removeAllChangeListeners() }
     }
 
-    override fun saveNewPoem(poem: PoemField): Flow<String> = callbackFlow {
-        trySend("Trying")
+    override fun saveNewPoem(poem: PoemField): Flow<Boolean> = callbackFlow {
         val realmTask = realm.executeTransactionAsync (
-            { it.copyToRealm(realmMapper.mapToRealm(poem)) },
-            { trySend("Success"); close() },
-            { cancel("PoemsStorageImpl.saveNewPoem Error", it) }
+            { it.insert(realmMapper.mapToRealm(poem)) },
+            { trySend(true);  close() },
+            { trySend(false); cancel("PoemsStorageImpl.saveNewPoem Error", it) }
         )
         awaitClose { realmTask.cancel() }
     }
 
-    override fun updatePoem(id: Int, poemData: PoemData) {
+    override fun updatePoem(poem: PoemField, newPoemData: PoemData): Flow<Boolean> = callbackFlow {
+        val onSuccess: () -> Unit = {
+            trySend(true)
+            close()
+        }
+        val onError: (Throwable) -> Unit = { t: Throwable ->
+            trySend(false)
+            cancel("PoemsStorageImpl.updatePoem Error", t)
+        }
+
+        val transaction: (Realm) -> Unit = transaction@ { it: Realm ->
+            val realmPoem = it.where<PoemFieldRealm>()
+                .equalTo(PoemFieldRealm::id.name, poem.id)
+                .findFirst()
+
+            if (realmPoem == null) {
+                onError( NullPointerException("transaction realmPoem(id = ${poem.id}) is null! ") )
+                return@transaction
+            }
+
+            realmPoem.author           = poem.author
+            realmPoem.currentTitle     = poem.currentTitle
+            realmPoem.currentFirstLine = poem.currentFirstLine
+
+            realmPoem.poemsRealm.add(
+                realmMapper.mapPoemDataToRealm(newPoemData)
+            )
+        }
+        val realmTask = realm.executeTransactionAsync(transaction, onSuccess, onError)
+        awaitClose { realmTask.cancel() }
+    }
+
+    override fun deletePoem(id: Long): Flow<Boolean> = callbackFlow {
+        val onSuccess: () -> Unit = {
+            trySend(true)
+            close()
+        }
+        val onError: (Throwable) -> Unit = { t: Throwable ->
+            trySend(false)
+            cancel("PoemsStorageImpl.deletePoem Error", t)
+        }
+
+        val transaction: (Realm) -> Unit = transaction@{ it: Realm ->
+            val realmPoem = it.where<PoemFieldRealm>()
+                .equalTo(PoemFieldRealm::id.name, id)
+                .findFirst()
+
+            if (realmPoem == null) {
+                onError(NullPointerException("transaction realmPoem(id = ${id}) is null! "))
+                return@transaction
+            }
+
+            realmPoem.poemsRealm.deleteAllFromRealm()
+            realmPoem.deleteFromRealm()
+        }
+
+        val realmTask = realm.executeTransactionAsync(transaction, onSuccess, onError)
+        awaitClose { realmTask.cancel() }
     }
 
 

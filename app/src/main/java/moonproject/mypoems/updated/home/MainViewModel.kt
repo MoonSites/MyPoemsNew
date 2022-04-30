@@ -1,23 +1,27 @@
 package moonproject.mypoems.updated.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.launch
 import moonproject.mypoems.domain.models.GetPoemsParams
 import moonproject.mypoems.domain.models.PoemField
-import moonproject.mypoems.domain.usecases.poems.GetCurrentPoemUseCase
-import moonproject.mypoems.domain.usecases.poems.GetSortedPoemsUseCase
-import moonproject.mypoems.domain.usecases.poems.SearchPoemsParamsUseCase
-import moonproject.mypoems.domain.usecases.poems.UpdatePoemUseCase
+import moonproject.mypoems.domain.usecases.poems.*
+import moonproject.mypoems.updated.extensions.log
 import moonproject.mypoems.updated.models.AdapterPoem
 import moonproject.mypoems.updated.models.DomainToPresenterPoemMapper
+import moonproject.mypoems.updated.models.SavePoemDataParam
+import moonproject.mypoems.updated.models.SavePoemFieldParam
 
 class MainViewModel(
     getSortedPoemsUseCase: GetSortedPoemsUseCase,
     private val searchPoemsParamsUseCase: SearchPoemsParamsUseCase,
     private val getCurrentPoemUseCase: GetCurrentPoemUseCase,
     private val updatePoemUseCase: UpdatePoemUseCase,
+    private val deletePoemUseCase: DeletePoemUseCase,
     private val domainToPresenterPoemMapper: DomainToPresenterPoemMapper,
 ) : ViewModel() {
 
@@ -45,6 +49,23 @@ class MainViewModel(
         started = WhileSubscribed(1000),
         initialValue = listOf()
     )
+
+    private val _currentPoemId = MutableStateFlow<Long>(0)
+    val currentPoemId = _currentPoemId.asStateFlow()
+
+    val currentPoem = _currentPoemId
+        .filter { it != 0L }
+        .flatMapLatest { id -> getCurrentPoemUseCase(id) }
+        .onEach { log("VM currentPoem", it) }
+        .stateIn(
+            scope = viewModelScope,
+            started = WhileSubscribed(1000),
+            initialValue = null
+        )
+//        .map { it }       //maybe I should map it to presentation-layer object, because domain-object has vars (but it's better if they will be vals)
+
+    private val _poemViewMode = MutableLiveData( CurrentPoemFragment.PoemViewMode.initialMode )
+    val poemViewMode: LiveData<CurrentPoemFragment.PoemViewMode> = _poemViewMode
 
 
     init {
@@ -77,6 +98,7 @@ class MainViewModel(
         poemsFilterText.value = text
     }
 
+
     fun openCurrentPoem(id: Long) {
         _currentPoemId.value = id
     }
@@ -86,12 +108,44 @@ class MainViewModel(
     }
     fun isPoemOpened() = _currentPoemId.value != 0L
 
-    private val _currentPoemId = MutableStateFlow<Long>(0)
-    val currentPoemId = _currentPoemId.asStateFlow()
 
-    val currentPoem: Flow<PoemField?> = _currentPoemId
-        .filter { it != 0L }
-        .flatMapLatest { id -> getCurrentPoemUseCase(id) }
-//        .map { it }       //maybe I should map it to presentation-layer object, because domain-object has vars (but it's better if they will be vals)
+    fun changePoemViewMode(toInitial: Boolean = false) {
+        _poemViewMode.value =
+            if (toInitial) CurrentPoemFragment.PoemViewMode.initialMode
+            else           _poemViewMode.value!!.next()
+    }
+
+
+    fun updatePoemData(
+        title: String,
+        epigraph: String,
+        text: String,
+        author: String,
+        additionalText: String,
+        callback: (Boolean, Long) -> Unit
+    ) {
+        //может проверку на идентичность полей чтоб лишний раз не сохранять
+        val poemField = SavePoemFieldParam.packForUpdate(
+            id = currentPoemId.value,
+            author = author,
+            title = title,
+            text = text,
+        )
+        val poemData = SavePoemDataParam.create(title, epigraph, text, additionalText)
+        viewModelScope.launch {
+            updatePoemUseCase(poemField, poemData).collect {
+                callback(it, poemData.timestamp)
+            }
+        }
+    }
+
+    fun deletePoem(callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            deletePoemUseCase(currentPoemId.value).collect {
+                callback(it)
+            }
+        }
+    }
+
 
 }

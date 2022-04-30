@@ -1,6 +1,7 @@
 package moonproject.mypoems.updated
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import moonproject.mypoems.updated.di.appModule
@@ -43,6 +44,7 @@ class App : Application() {
             modules(appModule, domainModule, dataModule)
         }
 //        DynamicColors.applyToActivitiesIfAvailable(this)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
 }

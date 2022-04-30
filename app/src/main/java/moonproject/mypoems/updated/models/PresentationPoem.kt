@@ -19,29 +19,35 @@ data class SavePoemFieldParam(
 
     companion object {
 
-        fun create(author: String, title: String, epigraph: String, text: String, additionalText: String) = SavePoemFieldParam(
-            System.currentTimeMillis(),
-            author,
-            listOf( createPoemData(title, epigraph, text, additionalText) ),
-            title,
-            getFirstLine(text)
+        fun createNewField(author: String, title: String, epigraph: String, text: String, additionalText: String) = create(
+            id = System.currentTimeMillis(),
+            author = author,
+            poemsData = listOf( SavePoemDataParam.create(title, epigraph, text, additionalText) ),
+            title = title,
+            text = text
         )
 
+        fun packForUpdate(id: Long, author: String, title: String, text: String) = create(
+            id = id,
+            author = author,
+            poemsData = listOf(),
+            title = title,
+            text = text
+        )
 
-        private fun createPoemData(title: String, epigraph: String, text: String, additionalText: String): SavePoemDataParam {
-            return SavePoemDataParam(
-                title = title,
-                epigraph = epigraph,
-                text = text,
-                additionalText = additionalText,
-                timestamp = System.currentTimeMillis()
-            )
-        }
+        private fun create(id: Long, author: String, poemsData: List<PoemData>, title: String, text: String) = SavePoemFieldParam(
+            id = id,
+            author = author,
+            poems = poemsData,
+            currentTitle = title,
+            currentFirstLine = getFirstLine(text)
+        )
+
 
         private fun getFirstLine(text: String): String {
             val index = text.indexOf('\n')
 
-            return if (index == -1) {
+            return if (index == -1 || index > 40) {
                 val lastIndex = minOf(text.length, 40)
                 val shouldAddThreeDots = if (text.length > 40) "..." else ""
                 text.substring(0, lastIndex) + shouldAddThreeDots
@@ -59,7 +65,22 @@ data class SavePoemDataParam(
     override var text: String,
     override var additionalText: String,
     override var timestamp: Long
-) : PoemData
+) : PoemData {
+
+    companion object {
+
+        fun create(title: String, epigraph: String, text: String, additionalText: String): SavePoemDataParam {
+            return SavePoemDataParam(
+                title = title,
+                epigraph = epigraph,
+                text = text,
+                additionalText = additionalText,
+                timestamp = System.currentTimeMillis()
+            )
+        }
+
+    }
+}
 
 
 

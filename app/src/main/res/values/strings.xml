@@ -14,4 +14,13 @@
     <string name="edit_poem">Редактировать текст</string>
     <string name="copy_poem">Скопировать текст</string>
     <string name="delete_poem">Удалить стихотворение</string>
+    <string name="save">Сохранить</string>
+    <string name="saving_error">Ошибка сохранения</string>
+    <string name="saved">Сохранено</string>
+    <string name="confirm">Вы уверены?</string>
+    <string name="delete_poem_message">Это действие нельзя отменить</string>
+    <string name="delete">Удалить</string>
+    <string name="deleted">Удалено</string>
+    <string name="error">Ошибка</string>
+    <string name="copied">Текст скопирован</string>
 </resources>

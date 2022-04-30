@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_poems_list.*
 import kotlinx.coroutines.launch
+import moonproject.mypoems.domain.models.PoemData
 import moonproject.mypoems.domain.usecases.poems.SaveNewPoemUseCase
 import moonproject.mypoems.updated.R
 import moonproject.mypoems.updated.extensions.log
@@ -73,27 +74,33 @@ class PoemsListFragment : Fragment(R.layout.fragment_poems_list) {
         viewModel.currentPoemId.observe(viewLifecycleOwner) {
             log("viewModel.currentPoemId", it)
         }
-        viewModel.currentPoem.observe(viewLifecycleOwner) {
-            log("viewModel.currentPoem", it)
-        }
 
     }
 
 
     private fun temp() {
-        val a: List<Char> = ('a'..'z') + ('A'..'Z')
-        val b = CharArray(10) { a[Random.nextInt(0, a.size)] }
-        val poeField = SavePoemFieldParam.create(
+        val randomText: () -> String = {
+            val a: List<Char> = ('a'..'z') + ('A'..'Z')
+            val b = CharArray(10) { a[Random.nextInt(0, a.size)] }
+            b.joinToString("")
+        }
+
+        val poemField = SavePoemFieldParam.createNewField(
             author = "Danil",
-            title = b.joinToString(""),
-            epigraph = "",
+            title = randomText(),
+            epigraph = randomText(),
             text = "${Random.nextInt(1000, 100000)}",
-            additionalText = "",
+            additionalText = randomText(),
         )
 
+        val p = arrayListOf<PoemData>()
+        p.addAll(poemField.poems)
+
+
+
         lifecycleScope.launch {
-            SaveNewPoemUseCase(get()).invoke(poeField).collect {
-                toast(it)
+            SaveNewPoemUseCase(get()).invoke(poemField).collect {
+                toast(it.toString())
             }
         }
 

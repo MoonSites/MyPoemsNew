@@ -22,6 +22,7 @@ val appModule = module {
             searchPoemsParamsUseCase = get(),
             getCurrentPoemUseCase = get(),
             updatePoemUseCase = get(),
+            deletePoemUseCase = get(),
             domainToPresenterPoemMapper = DomainToPresenterPoemMapper()
         )
     }
