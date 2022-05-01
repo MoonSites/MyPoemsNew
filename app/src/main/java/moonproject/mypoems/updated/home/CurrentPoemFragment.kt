@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -32,7 +33,7 @@ class CurrentPoemFragment : Fragment(R.layout.fragment_current_poem) {
 
 
     private val viewModel: MainViewModel by sharedViewModel()
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
+    private val dateFormat = SimpleDateFormat(PoemData.BASE_DATE_FORMAT, Locale.getDefault())
     private var dateSpinnerAdapter: ArrayAdapter<String>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,6 +41,7 @@ class CurrentPoemFragment : Fragment(R.layout.fragment_current_poem) {
         KeyboardVisibilityEvent.setEventListener(requireActivity(), viewLifecycleOwner) { isOpen ->
             poemButtonsParent .isVisible = !isOpen
             poemButtonsDivider.isVisible = !isOpen
+            viewModel.changePagerScrollEnabled(!isOpen)
         }
 
         btnChangeViewMode.onClick {
@@ -53,16 +55,22 @@ class CurrentPoemFragment : Fragment(R.layout.fragment_current_poem) {
                 text.text.toString(),
                 autor.text.toString(),
                 dop.text.toString(),
-            ) { isSuccess, newDate ->
-                if (isSuccess) {
-                    toast(R.string.saved)
+            ) { isSuccess, _ ->
+                when (isSuccess) {
+                     true -> {
+                        toast(R.string.saved)
 
-//                    val a = dateSpinnerAdapter ?: return@updatePoemData
-//                    a.add(dateFormat.format(newDate))
-//                    spinner.setSelection(a.count - 1)
+            //                    val a = dateSpinnerAdapter ?: return@updatePoemData
+            //                    a.add(dateFormat.format( _ ))
+            //                    spinner.setSelection(a.count - 1)
 
-                } else {
-                    toast(R.string.saving_error)
+                    }
+                    false -> {
+                        toast(R.string.saving_error)
+                    }
+                    null -> {
+                        toast(R.string.no_changes)
+                    }
                 }
             }
         }
@@ -107,6 +115,7 @@ class CurrentPoemFragment : Fragment(R.layout.fragment_current_poem) {
 
             autor.setText(poemField.author)
             initSpinner(poemField)
+            showData(poemField.poems.last())
 
         }
     }
@@ -142,22 +151,33 @@ class CurrentPoemFragment : Fragment(R.layout.fragment_current_poem) {
     }
 
     private fun initSpinner(poemField: PoemField) {
-        val poemsData = poemField.poems.map { dateFormat.format(it.timestamp) }
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_spinner, R.id.spinnerItemTv, poemsData)
+        val poemsData = poemField.poems.map { poemData ->
+            val timestampDate = dateFormat.format(poemData.timestamp)
 
-        dateSpinnerAdapter = adapter
-        initSpinnerBackground()
-        spinner.adapter = adapter
-        spinner.setSelection(poemsData.lastIndex)
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                log("spinner onItemSelected pos", position)
-                showData(poemField.poems[position])
+            if (poemData.legacyDate.isEmpty()) {
+                timestampDate
+            } else {
+                poemData.legacyDate + " ($timestampDate)"
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_spinner, R.id.spinnerItemTv, poemsData)
+        val listPopupWindow = ListPopupWindow(requireContext(), null, com.google.android.material.R.attr.listPopupWindowStyle)
+
+        listPopupWindow.anchorView = spinner
+        listPopupWindow.setAdapter(adapter)
+        dateSpinnerAdapter = adapter
+
+//        initSpinnerBackground()
+        listPopupWindow.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
+            log("spinner onItemSelected pos", position)
+            spinner.text = poemsData[position]
+            showData(poemField.poems[position])
+            listPopupWindow.dismiss()
+        }
+
+        spinner.onClick { listPopupWindow.show() }
+        spinner.text = poemsData.last()
     }
 
     private fun initSpinnerBackground() {
@@ -177,7 +197,7 @@ class CurrentPoemFragment : Fragment(R.layout.fragment_current_poem) {
         drawable.setColor(0xff42A5F5.toInt())
         drawable.cornerRadius = 10f
         drawable.alpha = 240
-        spinner.setPopupBackgroundDrawable(drawable)
+//        spinner.setPopupBackgroundDrawable(drawable)
     }
 
     private fun setEditFieldsEnabled(isEnabled: Boolean) {

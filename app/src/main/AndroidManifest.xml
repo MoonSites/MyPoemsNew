@@ -23,6 +23,13 @@
         <activity
             android:name=".home.MainActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".newpoem.NewPoemActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

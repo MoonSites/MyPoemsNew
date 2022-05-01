@@ -2,8 +2,10 @@ package moonproject.mypoems.updated
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import io.realm.FieldAttribute
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import moonproject.mypoems.domain.models.PoemData
 import moonproject.mypoems.updated.di.appModule
 import moonproject.mypoems.updated.di.dataModule
 import moonproject.mypoems.updated.di.domainModule
@@ -22,20 +24,18 @@ class App : Application() {
 
         val realmConfig = RealmConfiguration.Builder()
             .name("poems.realm")
-            .schemaVersion(1L)
-//            .initialData { realm ->
-//                val data = listOf(
-//                    PoemFieldRealm(1, "f"),
-//                    PoemFieldRealm(2, "fsdf"),
-//                    PoemFieldRealm(3, "ffgf"),
-//                )
-//                data[0].poemsRealm = RealmList(PoemDataRealm("sfd", "", "hello", "", 0L))
-//                data[1].poemsRealm = RealmList(PoemDataRealm("dsfgsfdfg", "", "hellohellohellohellohellohellohellohellohellohellohellohellohello", "", 0L))
-//                data[2].poemsRealm = RealmList(PoemDataRealm("dsfgsfdfg", "", "my name is\nsdfsdfssdfsdfssdfsdfs", "", 0L))
-//
-//                realm.copyToRealm(data)
-//            }
+            .schemaVersion(2L)
+            .migration { realm, _, newVersion ->
+                when (newVersion) {
+                    2L -> {
+                        realm.schema
+                            .get("PoemDataRealm")!!
+                            .addField(PoemData::legacyDate.name, String::class.java, FieldAttribute.REQUIRED)
+                    }
+                }
+            }
             .build()
+
         Realm.setDefaultConfiguration(realmConfig)
 
         startKoin {

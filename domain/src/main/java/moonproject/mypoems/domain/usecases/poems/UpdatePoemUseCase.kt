@@ -9,7 +9,7 @@ class UpdatePoemUseCase(
     private val poemsRepo: PoemsRepo
 ) {
 
-    operator fun invoke(poemField: PoemField, poemData: PoemData): Flow<Boolean> {
+    operator fun invoke(poemField: PoemField, poemData: PoemData?): Flow<Boolean> {
         return poemsRepo.updatePoem(poemField, poemData)
     }
 

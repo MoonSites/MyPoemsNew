@@ -23,4 +23,7 @@
     <string name="deleted">Удалено</string>
     <string name="error">Ошибка</string>
     <string name="copied">Текст скопирован</string>
+    <string name="date">Дата:</string>
+    <string name="cancel">Отмена</string>
+    <string name="no_changes">Изменений нет</string>
 </resources>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:scrollbars="none">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:labelFor="@+id/titleField"
+            android:text="@string/poemName"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/titleField"
+            style="@style/EditTextStyle"
+            android:layout_below="@+id/tv1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:inputType="textCapSentences"
+            android:maxLines="1"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/epigraphField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="6dp"
+            android:ems="8"
+            android:gravity="end"
+            android:hint="@string/epigraf"
+            android:inputType="textCapSentences"
+            android:textColor="#000"
+            android:textStyle="italic"
+            android:importantForAutofill="no" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@+id/textField"
+            android:text="@string/text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/textField"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
+            android:importantForAutofill="no" />
+
+        <LinearLayout
+            android:id="@+id/layAutor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:labelFor="@id/authorField"
+                android:text="@string/autor"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/authorField"
+                style="@style/EditTextStyle"
+                android:importantForAutofill="no"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:minWidth="40dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:labelFor="@+id/dateField"
+                android:text="@string/date"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/dateField"
+                style="@style/EditTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:inputType="date"
+                android:minWidth="40dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@+id/otherField"
+            android:text="@string/other"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/otherField"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:inputType="textMultiLine|textCapSentences"
+            android:importantForAutofill="no" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancel"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@string/cancel" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</ScrollView>

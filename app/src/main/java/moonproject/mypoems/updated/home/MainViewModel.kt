@@ -67,6 +67,9 @@ class MainViewModel(
     private val _poemViewMode = MutableLiveData( CurrentPoemFragment.PoemViewMode.initialMode )
     val poemViewMode: LiveData<CurrentPoemFragment.PoemViewMode> = _poemViewMode
 
+    private val _pagerScrollEnabled = MutableLiveData(true)
+    val pagerScrollEnabledWhenViewPoem: LiveData<Boolean> = _pagerScrollEnabled
+
 
     init {
         searchPoemsParamsUseCase.get().let {
@@ -122,19 +125,36 @@ class MainViewModel(
         text: String,
         author: String,
         additionalText: String,
-        callback: (Boolean, Long) -> Unit
+        callback: (Boolean?, Long) -> Unit
     ) {
         //может проверку на идентичность полей чтоб лишний раз не сохранять
+        //может быть может быть
+        val curPoemData = currentPoem.value!!.poems.last()
+
+        val contentAreIdentical =
+            curPoemData.title == title &&
+            curPoemData.epigraph == epigraph &&
+            curPoemData.text == text &&
+            curPoemData.additionalText == additionalText
+
+        if (contentAreIdentical && currentPoem.value!!.author == author) {
+            callback(null, 0L)
+            return
+        }
+
         val poemField = SavePoemFieldParam.packForUpdate(
             id = currentPoemId.value,
             author = author,
             title = title,
             text = text,
         )
-        val poemData = SavePoemDataParam.create(title, epigraph, text, additionalText)
+        val poemData =
+            if (contentAreIdentical) null
+            else SavePoemDataParam.create(title, epigraph, text, additionalText, "")
+
         viewModelScope.launch {
             updatePoemUseCase(poemField, poemData).collect {
-                callback(it, poemData.timestamp)
+                callback(it, poemData?.timestamp ?: curPoemData.timestamp)
             }
         }
     }
@@ -145,6 +165,10 @@ class MainViewModel(
                 callback(it)
             }
         }
+    }
+
+    fun changePagerScrollEnabled(isScrollEnabled: Boolean) {
+        _pagerScrollEnabled.value = isScrollEnabled
     }
 
 

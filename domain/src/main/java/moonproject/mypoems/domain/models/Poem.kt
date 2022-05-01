@@ -6,6 +6,12 @@ interface PoemData {
     var text: String
     var additionalText: String
     var timestamp: Long
+    var legacyDate: String
+
+
+    companion object {
+        const val BASE_DATE_FORMAT = "dd.MM.yyyy HH:mm:ss"
+    }
 }
 
 interface PoemField {

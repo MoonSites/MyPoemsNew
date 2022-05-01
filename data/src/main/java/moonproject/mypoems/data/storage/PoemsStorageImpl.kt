@@ -2,7 +2,6 @@ package moonproject.mypoems.data.storage
 
 import android.content.Context
 import androidx.core.content.edit
-import io.realm.Case
 import io.realm.Realm
 import io.realm.Sort
 import io.realm.kotlin.toFlow
@@ -26,15 +25,34 @@ class PoemsStorageImpl(
 
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    override fun getAllPoems(sort: Sort, filterFieldName: String, filterFieldValue: String): Flow<List<PoemField>> {
+    override fun getAllPoems(sort: Sort, filterField: GetPoemsParams.FilterField, filterFieldValue: String): Flow<List<PoemField>> {
         val query = realm.where<PoemFieldRealm>()
             .sort(PoemFieldRealm::id.name, sort)
 
-        if (filterFieldValue.isNotEmpty()) {
-            query.contains(filterFieldName, filterFieldValue, Case.INSENSITIVE)
-        }
+//        потому что Case.INSENSITIVE поддерживает только латинский алфавит //мда
+//        if (filterFieldValue.isNotEmpty()) {
+//            query
+//                .contains(filterFieldName, filterFieldValue, Case.INSENSITIVE)
+//                .or()
+//                .contains(filterFieldName, filterFieldValue.lowercase(Locale.getDefault()), Case.INSENSITIVE)
+//        }
 
-        return query.findAll().toFlow()
+        return query.findAll().toFlow().map { results ->
+            val out = arrayListOf<PoemField>()
+
+            results.forEach { poemFieldRealm ->
+                val field =
+                    when (filterField) {
+                        GetPoemsParams.FilterField.Title -> poemFieldRealm.currentTitle
+                        GetPoemsParams.FilterField.FirstLine -> poemFieldRealm.currentFirstLine
+                    }
+
+                if (field.contains(filterFieldValue, true)) {
+                    out.add(poemFieldRealm)
+                }
+            }
+            out
+        }
     }
 
     override fun getPoemById(id: Long): Flow<PoemField?> /*= callbackFlow*/ {
@@ -67,7 +85,7 @@ class PoemsStorageImpl(
         awaitClose { realmTask.cancel() }
     }
 
-    override fun updatePoem(poem: PoemField, newPoemData: PoemData): Flow<Boolean> = callbackFlow {
+    override fun updatePoem(poem: PoemField, newPoemData: PoemData?): Flow<Boolean> = callbackFlow {
         val onSuccess: () -> Unit = {
             trySend(true)
             close()
@@ -91,9 +109,11 @@ class PoemsStorageImpl(
             realmPoem.currentTitle     = poem.currentTitle
             realmPoem.currentFirstLine = poem.currentFirstLine
 
-            realmPoem.poemsRealm.add(
-                realmMapper.mapPoemDataToRealm(newPoemData)
-            )
+            if (newPoemData != null) {
+                realmPoem.poemsRealm.add(
+                    realmMapper.mapPoemDataToRealm(newPoemData)
+                )
+            }
         }
         val realmTask = realm.executeTransactionAsync(transaction, onSuccess, onError)
         awaitClose { realmTask.cancel() }

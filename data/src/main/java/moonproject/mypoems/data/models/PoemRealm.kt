@@ -28,8 +28,9 @@ internal open class PoemDataRealm(
     override var text: String,
     override var additionalText: String,
     override var timestamp: Long,
+    override var legacyDate: String
 ) : RealmObject(), PoemData {
-    constructor() : this("", "", "", "", 0L)
+    constructor() : this("", "", "", "", 0L, "")
 }
 
 
@@ -59,6 +60,7 @@ class PoemsToRealmMapper {
         poemData.text,
         poemData.additionalText,
         poemData.timestamp,
+        poemData.legacyDate
     )
 
 }

@@ -15,7 +15,7 @@ class PoemsRepoImpl(
 
     override fun getAllPoems(params: GetPoemsParams): Flow<List<PoemField>> = poemsStorage.getAllPoems(
         sortMap(params.sorting),
-        params.filterField.fieldName,
+        params.filterField,
         params.filterText
     )
 
@@ -23,7 +23,7 @@ class PoemsRepoImpl(
 
     override fun saveNewPoem(poem: PoemField) = poemsStorage.saveNewPoem(poem)
 
-    override fun updatePoem(poem: PoemField, poemData: PoemData) = poemsStorage.updatePoem(
+    override fun updatePoem(poem: PoemField, poemData: PoemData?) = poemsStorage.updatePoem(
         poem = poem,
         newPoemData = poemData
     )

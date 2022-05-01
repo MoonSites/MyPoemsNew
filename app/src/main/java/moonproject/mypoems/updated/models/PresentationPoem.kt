@@ -19,10 +19,17 @@ data class SavePoemFieldParam(
 
     companion object {
 
-        fun createNewField(author: String, title: String, epigraph: String, text: String, additionalText: String) = create(
+        fun createNewField(
+            author: String,
+            title: String,
+            epigraph: String,
+            text: String,
+            additionalText: String,
+            userDate: String
+        ) = create(
             id = System.currentTimeMillis(),
             author = author,
-            poemsData = listOf( SavePoemDataParam.create(title, epigraph, text, additionalText) ),
+            poemsData = listOf( SavePoemDataParam.create(title, epigraph, text, additionalText, userDate) ),
             title = title,
             text = text
         )
@@ -64,18 +71,26 @@ data class SavePoemDataParam(
     override var epigraph: String,
     override var text: String,
     override var additionalText: String,
-    override var timestamp: Long
+    override var timestamp: Long,
+    override var legacyDate: String
 ) : PoemData {
 
     companion object {
 
-        fun create(title: String, epigraph: String, text: String, additionalText: String): SavePoemDataParam {
+        fun create(
+            title: String,
+            epigraph: String,
+            text: String,
+            additionalText: String,
+            userDate: String
+        ): SavePoemDataParam {
             return SavePoemDataParam(
                 title = title,
                 epigraph = epigraph,
                 text = text,
                 additionalText = additionalText,
-                timestamp = System.currentTimeMillis()
+                timestamp = System.currentTimeMillis(),
+                legacyDate = userDate
             )
         }
 

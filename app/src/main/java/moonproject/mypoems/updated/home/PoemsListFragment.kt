@@ -4,23 +4,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_poems_list.*
-import kotlinx.coroutines.launch
-import moonproject.mypoems.domain.models.PoemData
-import moonproject.mypoems.domain.usecases.poems.SaveNewPoemUseCase
 import moonproject.mypoems.updated.R
-import moonproject.mypoems.updated.extensions.log
 import moonproject.mypoems.updated.extensions.observe
 import moonproject.mypoems.updated.extensions.onClick
-import moonproject.mypoems.updated.extensions.toast
-import moonproject.mypoems.updated.models.SavePoemFieldParam
+import moonproject.mypoems.updated.extensions.startActivity
+import moonproject.mypoems.updated.newpoem.NewPoemActivity
+import moonproject.mypoems.updated.settings.SettingsActivity
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
-import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import kotlin.random.Random
 
 class PoemsListFragment : Fragment(R.layout.fragment_poems_list) {
 
@@ -48,7 +42,9 @@ class PoemsListFragment : Fragment(R.layout.fragment_poems_list) {
                 R.id.menuItemSorting -> {
                     viewModel.toggleSorting()
                 }
-                R.id.menuItemSettings -> {}
+                R.id.menuItemSettings -> {
+                    startActivity<SettingsActivity>()
+                }
             }
             true
         }
@@ -64,45 +60,16 @@ class PoemsListFragment : Fragment(R.layout.fragment_poems_list) {
         })
 
         createPoemFab.onClick {
-            temp()
+            startActivity<NewPoemActivity>()
         }
 
         viewModel.poemsList.observe(viewLifecycleOwner) {
             adapter.updateData(it)
         }
 
-        viewModel.currentPoemId.observe(viewLifecycleOwner) {
-            log("viewModel.currentPoemId", it)
-        }
-
-    }
-
-
-    private fun temp() {
-        val randomText: () -> String = {
-            val a: List<Char> = ('a'..'z') + ('A'..'Z')
-            val b = CharArray(10) { a[Random.nextInt(0, a.size)] }
-            b.joinToString("")
-        }
-
-        val poemField = SavePoemFieldParam.createNewField(
-            author = "Danil",
-            title = randomText(),
-            epigraph = randomText(),
-            text = "${Random.nextInt(1000, 100000)}",
-            additionalText = randomText(),
-        )
-
-        val p = arrayListOf<PoemData>()
-        p.addAll(poemField.poems)
-
-
-
-        lifecycleScope.launch {
-            SaveNewPoemUseCase(get()).invoke(poemField).collect {
-                toast(it.toString())
-            }
-        }
+//        viewModel.currentPoemId.observe(viewLifecycleOwner) {
+//            log("viewModel.currentPoemId", it)
+//        }
 
     }
 
