@@ -6,10 +6,7 @@ import moonproject.mypoems.data.PoemsRepoImpl
 import moonproject.mypoems.data.models.PasswordDataToEncodedMapper
 import moonproject.mypoems.data.models.PasswordEncodedToDataMapper
 import moonproject.mypoems.data.models.PoemsToRealmMapper
-import moonproject.mypoems.data.storage.PasswordStorage
-import moonproject.mypoems.data.storage.PoemsStorage
-import moonproject.mypoems.data.storage.PoemsStorageImpl
-import moonproject.mypoems.data.storage.SharedPrefPasswordStorage
+import moonproject.mypoems.data.storage.*
 import moonproject.mypoems.domain.repo.PasswordRepo
 import moonproject.mypoems.domain.repo.PoemsRepo
 import org.koin.dsl.module
@@ -27,7 +24,7 @@ val dataModule = module {
 
 
     single<PasswordStorage> {
-        SharedPrefPasswordStorage(context = get())
+        SharedPrefPasswordStorage(userPreferences = get())
     }
 
     single<PasswordRepo> {
@@ -41,7 +38,7 @@ val dataModule = module {
 
     single<PoemsStorage> {
         PoemsStorageImpl(
-            context = get(),
+            userPreferences = get(),
             realm = get(),
             realmMapper = PoemsToRealmMapper())
     }
@@ -52,5 +49,8 @@ val dataModule = module {
 //            poemsMapper = PoemsMapper()
         )
     }
+
+
+    single { UserPreferences(context = get()) }
 
 }

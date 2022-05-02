@@ -26,4 +26,19 @@
     <string name="date">Дата:</string>
     <string name="cancel">Отмена</string>
     <string name="no_changes">Изменений нет</string>
+    <string name="useDynamicColors">Динамические цвета</string>
+    <string name="appTheme">Тема приложения</string>
+    <string name="app_interface">Интерфейс</string>
+    <string name="app_login">Вход в приложение</string>
+    <string name="password">Пароль</string>
+    <string name="passwordLength">Длина пароля</string>
+    <string name="searchType">Тип поиска</string>
+    <string name="sorting">Сортировка</string>
+    <string name="def_author">Автор по-умолчанию</string>
+    <string name="searchByFirstLine">По первой строке</string>
+    <string name="searchByTitle">По названию</string>
+    <string name="sortNewFirst">Сначала новые</string>
+    <string name="sortOldFirst">Новые внизу</string>
+    <string name="poems_pref">Стихотворения</string>
+    <string name="text_is_empty">Текст не может быть пустым</string>
 </resources>

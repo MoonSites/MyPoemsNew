@@ -2,13 +2,16 @@ package moonproject.mypoems.updated
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.material.color.DynamicColors
 import io.realm.FieldAttribute
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import moonproject.mypoems.data.storage.UserPreferences
 import moonproject.mypoems.domain.models.PoemData
 import moonproject.mypoems.updated.di.appModule
 import moonproject.mypoems.updated.di.dataModule
 import moonproject.mypoems.updated.di.domainModule
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -43,8 +46,19 @@ class App : Application() {
             androidContext(this@App)
             modules(appModule, domainModule, dataModule)
         }
-//        DynamicColors.applyToActivitiesIfAvailable(this)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        val prefs = get<UserPreferences>()
+        val mode = when (prefs.useDarkTheme) {
+            true  -> AppCompatDelegate.MODE_NIGHT_YES
+            false -> AppCompatDelegate.MODE_NIGHT_NO
+            null  -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
+
+        DynamicColors.applyToActivitiesIfAvailable(this) { _, _ ->
+            prefs.useDynamicColors
+        }
+
+        AppCompatDelegate.setDefaultNightMode(mode)
     }
 
 }

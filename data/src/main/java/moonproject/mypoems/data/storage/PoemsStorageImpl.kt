@@ -1,6 +1,5 @@
 package moonproject.mypoems.data.storage
 
-import android.content.Context
 import androidx.core.content.edit
 import io.realm.Realm
 import io.realm.Sort
@@ -18,12 +17,12 @@ import moonproject.mypoems.domain.models.PoemData
 import moonproject.mypoems.domain.models.PoemField
 
 class PoemsStorageImpl(
-    context: Context,
+    private val userPreferences: UserPreferences,
     private val realm: Realm,
     private val realmMapper: PoemsToRealmMapper
 ) : PoemsStorage {
 
-    private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+//    private val prefs = context.getSharedPreferences(UserPreferences.APP_PREFS_NAME, Context.MODE_PRIVATE)
 
     override fun getAllPoems(sort: Sort, filterField: GetPoemsParams.FilterField, filterFieldValue: String): Flow<List<PoemField>> {
         val query = realm.where<PoemFieldRealm>()
@@ -149,10 +148,10 @@ class PoemsStorageImpl(
 
 
     override fun getSearchPoemsParams(): GetPoemsParams {
-        val sortingPrefs = prefs.getString(KEY_SORTING, GetPoemsParams.Sorting.defaultValue)
+        val sortingPrefs = userPreferences.prefs.getString(KEY_SORTING, GetPoemsParams.Sorting.defaultValue)
             ?: GetPoemsParams.Sorting.defaultValue
 
-        val filterFieldPrefs = prefs.getString(KEY_FILTER_FIELD, GetPoemsParams.FilterField.defaultValue)
+        val filterFieldPrefs = userPreferences.prefs.getString(KEY_FILTER_FIELD, GetPoemsParams.FilterField.defaultValue)
             ?: GetPoemsParams.FilterField.defaultValue
 
         var sorting     = GetPoemsParams.Sorting.valueOf(GetPoemsParams.Sorting.defaultValue)
@@ -169,7 +168,7 @@ class PoemsStorageImpl(
     }
 
     override fun saveSearchPoemsParams(params: GetPoemsParams) {
-        prefs.edit {
+        userPreferences.prefs.edit {
             putString(KEY_SORTING, params.sorting.name)
             putString(KEY_FILTER_FIELD, params.filterField.name)
         }
@@ -177,9 +176,9 @@ class PoemsStorageImpl(
 
 
     companion object {
-        const val PREFS_NAME = "poems_prefs"
-        const val KEY_SORTING = "KEY_SORTING"
-        const val KEY_FILTER_FIELD = "KEY_FILTER_FIELD"
+//        const val PREFS_NAME = "poems_prefs"
+        private const val KEY_SORTING = "KEY_SORTING"
+        private const val KEY_FILTER_FIELD = "KEY_FILTER_FIELD"
     }
 
 }

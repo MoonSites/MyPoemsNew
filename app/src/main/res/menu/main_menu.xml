@@ -10,10 +10,10 @@
 
     <item
         android:id="@+id/menuItemSearchType"
-        android:title="Тип поиска"/>
+        android:title="@string/searchType"/>
     <item
         android:id="@+id/menuItemSorting"
-        android:title="Сортировка"/>
+        android:title="@string/sorting"/>
 
     <item
         android:id="@+id/menuItemSettings"

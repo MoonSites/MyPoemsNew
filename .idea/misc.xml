@@ -6,19 +6,33 @@
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/ic_add.xml" value="0.124" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/ic_backspace.xml" value="0.124" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/ic_edit.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/ic_enter.xml" value="0.124" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/ic_lock_login.xml" value="0.124" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/ic_save.xml" value="0.124" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/ic_search.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/login_stroke.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/pref_icon_default_author.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/pref_icon_interface.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/pref_icon_palette.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/pref_icon_pass_length.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/pref_icon_password.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/pref_icon_password_set.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/pref_icon_poems.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/pref_icon_search_type.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/pref_icon_sorting.xml" value="0.124" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/pref_icon_theme.xml" value="0.124" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/drawable/spinner_line.xml" value="0.1845" />
-        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/layout/activity_main.xml" value="0.1953125" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/layout/activity_new_poem.xml" value="0.25" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/layout/activity_settings.xml" value="0.25" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/layout/dialog_login_new_password.xml" value="0.209375" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/layout/fragment_current_poem.xml" value="0.2" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/layout/fragment_poems_list.xml" value="0.2" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/layout/item_list_poem.xml" value="0.209375" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/layout/item_spinner.xml" value="0.209375" />
         <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/menu/main_menu.xml" value="0.209375" />
+        <entry key="..\:/Users/MoonDayJ/StudioProjects/MyPoemsNew/app/src/main/res/xml/settings_screen.xml" value="0.2793914246196404" />
       </map>
     </option>
   </component>

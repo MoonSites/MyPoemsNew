@@ -57,4 +57,8 @@ class LoginViewModel(
         _isAccessGranted.value = true
     }
 
+    fun clearPassword() {
+        _userPassword.value = ""
+    }
+
 }

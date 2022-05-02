@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.TextViewCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_login.*
 import moonproject.mypoems.updated.R
 import moonproject.mypoems.updated.extensions.onClick
 import moonproject.mypoems.updated.extensions.startActivity
-import moonproject.mypoems.updated.extensions.text
 import moonproject.mypoems.updated.extensions.toast
 import moonproject.mypoems.updated.home.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,7 +24,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        passwordField.isFocusable = false
 
         viewModel.checkIsPasswordExists()
 
@@ -36,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.isAccessGranted.observe(this) {
             val color = if (it == true) 0xFFB2FF59 else 0xffB71C1C
-            passwordField.setEndIconTintList(ColorStateList.valueOf(color.toInt()))
+            TextViewCompat.setCompoundDrawableTintList(passwordField, ColorStateList.valueOf(color.toInt()))
 
             if (it == true) {
                 openHomeScreen()
@@ -49,8 +48,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnDeleteSymbol.setOnLongClickListener {
-            passwordField.text = ""
-            false
+            viewModel.clearPassword()
+            true
         }
         btnDeleteSymbol.onClick {
             viewModel.removeLastPasswordSym()

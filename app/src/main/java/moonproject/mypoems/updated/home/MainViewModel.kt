@@ -72,6 +72,10 @@ class MainViewModel(
 
 
     init {
+        updateSearchPoemsParams()
+    }
+
+    fun updateSearchPoemsParams() {
         searchPoemsParamsUseCase.get().let {
             poemsSorting.value = it.sorting
             poemsFilterField.value = it.filterField

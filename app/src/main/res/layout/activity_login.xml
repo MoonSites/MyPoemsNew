@@ -14,55 +14,41 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="?colorPrimarySurface"
+        android:background="?colorPrimary"
         android:gravity="center"
         android:text="@string/enterPass"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#fff"
+        android:textColor="?colorOnPrimary"
         android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="@id/passwordField"
+        app:layout_constraintBottom_toTopOf="@id/grid"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordField"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:focusable="false"
-        android:gravity="center"
-        android:hint="@string/app_name"
-        android:textColorHint="#fff"
-        app:endIconMode="custom"
-        app:endIconDrawable="@drawable/ic_lock_login"
-        app:endIconContentDescription="@string/lock"
-        app:layout_constraintWidth_percent="0.4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.55">
+        app:layout_constraintVertical_bias="0.0" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:focusable="false"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:maxLength="9"
-            android:textColor="#fff"
-            android:textColorHint="#fff" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/passwordField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/app_name"
+        android:padding="16dp"
+        android:textColorHint="?colorOnPrimary"
+        android:textColor="?colorOnPrimary"
+        android:background="@drawable/login_stroke"
+        app:drawableEndCompat="@drawable/ic_lock_login"
+        app:layout_constraintBottom_toBottomOf="@id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.4" />
 
     <GridLayout
         android:id="@+id/grid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:columnCount="3"
-        app:layout_constraintTop_toBottomOf="@id/passwordField"
+        android:paddingVertical="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -116,8 +102,7 @@
             android:id="@+id/btnDeleteSymbol"
             style="@style/LoginTextButton"
             app:iconGravity="textStart"
-            app:icon="@drawable/ic_backspace"
-            app:iconTint="@color/loginButtonTextColor"/>
+            app:icon="@drawable/ic_backspace" />
         <!--android:textSize="16sp" />-->
 
         <com.google.android.material.button.MaterialButton

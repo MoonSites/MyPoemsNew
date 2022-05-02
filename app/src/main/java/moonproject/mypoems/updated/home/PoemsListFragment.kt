@@ -1,7 +1,9 @@
 package moonproject.mypoems.updated.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -13,6 +15,7 @@ import moonproject.mypoems.updated.extensions.onClick
 import moonproject.mypoems.updated.extensions.startActivity
 import moonproject.mypoems.updated.newpoem.NewPoemActivity
 import moonproject.mypoems.updated.settings.SettingsActivity
+import moonproject.mypoems.updated.settings.SettingsFragment
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -20,6 +23,15 @@ class PoemsListFragment : Fragment(R.layout.fragment_poems_list) {
 
 
     private val viewModel: MainViewModel by sharedViewModel()
+
+    private val settingsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        val shouldRecreate = it.data?.getBooleanExtra(SettingsFragment.SHOULD_RECREATE, false) ?: false
+
+        if (shouldRecreate) {
+            requireActivity().recreate()
+        }
+        viewModel.updateSearchPoemsParams()
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,7 +55,10 @@ class PoemsListFragment : Fragment(R.layout.fragment_poems_list) {
                     viewModel.toggleSorting()
                 }
                 R.id.menuItemSettings -> {
-                    startActivity<SettingsActivity>()
+                    settingsLauncher.launch(
+                        Intent(requireContext(), SettingsActivity::class.java)
+                    )
+//                    startActivity<SettingsActivity>()
                 }
             }
             true

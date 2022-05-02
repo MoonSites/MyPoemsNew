@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:icon="@drawable/pref_icon_interface"
+        app:title="@string/app_interface">
+
+        <ListPreference
+            app:defaultValue="null"
+            app:entries="@array/theme_entries"
+            app:entryValues="@array/theme_entries_keys"
+            app:icon="@drawable/pref_icon_theme"
+            app:key="theme"
+            app:title="@string/appTheme" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:icon="@drawable/pref_icon_palette"
+            app:key="useDynamicColors"
+            app:title="@string/useDynamicColors" />
+
+        <!--        фон приложения-->
+        <!--        параметры фона-->
+        <!--        удалить фон-->
+
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+        app:icon="@drawable/pref_icon_password"
+        app:title="@string/app_login">
+
+        <EditTextPreference
+            app:icon="@drawable/pref_icon_password_set"
+            app:key="KEY_PASSWORD"
+            app:title="@string/password" />
+
+        <EditTextPreference
+            app:icon="@drawable/pref_icon_pass_length"
+            app:key="KEY_PASSWORD_LENGTH"
+            app:title="@string/passwordLength" />
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+        app:icon="@drawable/pref_icon_poems"
+        app:title="@string/poems_pref">
+
+        <EditTextPreference
+            app:icon="@drawable/pref_icon_default_author"
+            app:key="defAuthor"
+            app:title="@string/def_author" />
+
+        <ListPreference
+            app:icon="@drawable/pref_icon_search_type"
+            app:key="KEY_FILTER_FIELD"
+            app:title="@string/searchType" />
+
+        <ListPreference
+            app:icon="@drawable/pref_icon_sorting"
+            app:key="KEY_SORTING"
+            app:title="@string/sorting" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

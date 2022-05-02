@@ -4,11 +4,12 @@
     <style name="LoginTextButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">55dp</item>
-        <item name="cornerRadius">20dp</item>
+<!--        <item name="cornerRadius">20dp</item>-->
         <!--<item title="strokeColor">@color/buttonShapeColor</item>-->
         <item name="android:textColor">?colorOnBackground</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
 <!--        <item name="iconTint">@color/colorPrimaryDark</item>-->
     </style>
 

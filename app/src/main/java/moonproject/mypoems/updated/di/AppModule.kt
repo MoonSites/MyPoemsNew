@@ -3,6 +3,7 @@ package moonproject.mypoems.updated.di
 import moonproject.mypoems.updated.home.MainViewModel
 import moonproject.mypoems.updated.login.LoginViewModel
 import moonproject.mypoems.updated.models.DomainToPresenterPoemMapper
+import moonproject.mypoems.updated.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -26,5 +27,10 @@ val appModule = module {
             domainToPresenterPoemMapper = DomainToPresenterPoemMapper()
         )
     }
+
+    viewModel {
+        SettingsViewModel()
+    }
+
 
 }
