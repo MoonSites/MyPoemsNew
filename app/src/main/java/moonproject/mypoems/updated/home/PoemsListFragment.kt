@@ -1,9 +1,13 @@
 package moonproject.mypoems.updated.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.AdapterView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.ListPopupWindow
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -48,18 +52,21 @@ class PoemsListFragment : Fragment(R.layout.fragment_poems_list) {
 
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.menuItemSearchType -> {
-                    viewModel.toggleFilterField()
+                R.id.menuItemOther -> {
+                    showOverflowMenu()
                 }
-                R.id.menuItemSorting -> {
-                    viewModel.toggleSorting()
-                }
-                R.id.menuItemSettings -> {
-                    settingsLauncher.launch(
-                        Intent(requireContext(), SettingsActivity::class.java)
-                    )
+//                R.id.menuItemSearchType -> {
+//                    viewModel.toggleFilterField()
+//                }
+//                R.id.menuItemSorting -> {
+//                    viewModel.toggleSorting()
+//                }
+//                R.id.menuItemSettings -> {
+//                    settingsLauncher.launch(
+//                        Intent(requireContext(), SettingsActivity::class.java)
+//                    )
 //                    startActivity<SettingsActivity>()
-                }
+//                }
             }
             true
         }
@@ -86,6 +93,43 @@ class PoemsListFragment : Fragment(R.layout.fragment_poems_list) {
 //            log("viewModel.currentPoemId", it)
 //        }
 
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun showOverflowMenu() {
+        val data =  listOf(
+            ToolbarOverflowAdapter.OverflowItem(R.id.menuItemSearchType, R.string.searchType, getString(viewModel.getPoemsSearchType())),
+            ToolbarOverflowAdapter.OverflowItem(R.id.menuItemSorting, R.string.sorting, getString(viewModel.getPoemsSortingType())),
+            ToolbarOverflowAdapter.OverflowItem(R.id.menuItemSettings, R.string.settings, ""),
+        )
+        val adapter = ToolbarOverflowAdapter(requireContext(), R.layout.item_overflow_menu, data)
+        val listPopupWindow = ListPopupWindow(requireContext(), null, com.google.android.material.R.attr.listPopupWindowStyle)
+
+        listPopupWindow.anchorView = toolbar.findViewById(R.id.menuItemOther) ?: toolbar
+        listPopupWindow.width = resources.getDimensionPixelSize(R.dimen.overflowItemWidth)
+        listPopupWindow.isModal = true
+        listPopupWindow.setAdapter(adapter)
+        listPopupWindow.setOverlapAnchor(true)
+        listPopupWindow.setDropDownGravity(Gravity.END)
+
+        listPopupWindow.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
+            when (data[position].id) {
+                R.id.menuItemSearchType -> {
+                    viewModel.toggleFilterField()
+                }
+                R.id.menuItemSorting -> {
+                    viewModel.toggleSorting()
+                }
+                R.id.menuItemSettings -> {
+                    settingsLauncher.launch(
+                        Intent(requireContext(), SettingsActivity::class.java)
+                    )
+                }
+            }
+            listPopupWindow.dismiss()
+        }
+
+        listPopupWindow.show()
     }
 
 }

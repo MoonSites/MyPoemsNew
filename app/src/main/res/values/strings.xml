@@ -41,4 +41,5 @@
     <string name="sortOldFirst">Новые внизу</string>
     <string name="poems_pref">Стихотворения</string>
     <string name="text_is_empty">Текст не может быть пустым</string>
+    <string name="menu">Меню</string>
 </resources>

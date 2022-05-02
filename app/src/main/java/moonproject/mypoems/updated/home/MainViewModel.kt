@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import moonproject.mypoems.domain.models.GetPoemsParams
 import moonproject.mypoems.domain.models.PoemField
 import moonproject.mypoems.domain.usecases.poems.*
+import moonproject.mypoems.updated.R
 import moonproject.mypoems.updated.extensions.log
 import moonproject.mypoems.updated.models.AdapterPoem
 import moonproject.mypoems.updated.models.DomainToPresenterPoemMapper
@@ -173,6 +174,20 @@ class MainViewModel(
 
     fun changePagerScrollEnabled(isScrollEnabled: Boolean) {
         _pagerScrollEnabled.value = isScrollEnabled
+    }
+
+    fun getPoemsSearchType(): Int {
+        return when(poemsFilterField.value) {
+            GetPoemsParams.FilterField.FirstLine -> R.string.searchByFirstLine
+            GetPoemsParams.FilterField.Title -> R.string.searchByTitle
+        }
+    }
+
+    fun getPoemsSortingType(): Int {
+        return when(poemsSorting.value) {
+            GetPoemsParams.Sorting.ASCENDING -> R.string.sortOldFirst
+            GetPoemsParams.Sorting.DESCENDING -> R.string.sortNewFirst
+        }
     }
 
 

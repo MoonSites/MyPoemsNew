@@ -19,7 +19,7 @@
             <EditText
                 android:id="@+id/title"
                 style="@style/EDasTextView"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
                 android:hint="@string/poemName"
@@ -31,12 +31,15 @@
             <EditText
                 android:id="@+id/epigraph"
                 style="@style/EDasTextView"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="16dp"
                 android:gravity="end"
                 android:hint="@string/epigraf"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine|textCapSentences"
+                android:minWidth="70dp"
                 android:textStyle="italic" />
 
             <EditText
@@ -44,7 +47,7 @@
                 style="@style/EDasTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="16dp"
                 android:hint="@string/text"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine|textCapSentences" />
@@ -53,37 +56,37 @@
             <EditText
                 android:id="@+id/autor"
                 style="@style/EDasTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginHorizontal="16dp"
                 android:gravity="end"
                 android:hint="@string/autor"
                 android:importantForAutofill="no"
                 android:inputType="textCapWords"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:minWidth="70dp" />
 
             <TextView
                 android:id="@+id/spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center" />
+
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/additionalTextDivider"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="10dp" />
-
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/additionalTextDivider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
-                android:src="?colorOnBackground" />
 
             <EditText
                 android:id="@+id/dop"
                 style="@style/EDasTextView"
-                android:layout_marginTop="4dp"
                 android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="4dp"
                 android:hint="@string/other"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine|textCapSentences" />
@@ -94,11 +97,10 @@
     </ScrollView>
 
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.divider.MaterialDivider
         android:id="@+id/poemButtonsDivider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:src="?colorOnBackground" />
+        android:layout_height="wrap_content" />
 
     <FrameLayout
         android:id="@+id/poemButtonsParent"
@@ -112,6 +114,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/delete_poem"
             android:visibility="gone"
+            app:tint="?colorControlNormal"
             app:srcCompat="@drawable/ic_delete" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -122,6 +125,7 @@
             android:layout_gravity="end"
             android:layout_marginEnd="60dp"
             android:contentDescription="@string/copy_poem"
+            app:tint="?colorControlNormal"
             app:srcCompat="@drawable/ic_copy" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -133,6 +137,7 @@
             android:layout_marginEnd="60dp"
             android:contentDescription="@string/save"
             android:visibility="gone"
+            app:tint="?colorControlNormal"
             app:srcCompat="@drawable/ic_save" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -142,6 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:contentDescription="@string/edit_poem"
+            app:tint="?colorControlNormal"
             app:srcCompat="@drawable/ic_edit" />
 
     </FrameLayout>

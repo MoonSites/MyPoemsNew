@@ -11,7 +11,8 @@
             app:entryValues="@array/theme_entries_keys"
             app:icon="@drawable/pref_icon_theme"
             app:key="theme"
-            app:title="@string/appTheme" />
+            app:title="@string/appTheme"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
@@ -51,17 +52,20 @@
         <EditTextPreference
             app:icon="@drawable/pref_icon_default_author"
             app:key="defAuthor"
-            app:title="@string/def_author" />
+            app:title="@string/def_author"
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             app:icon="@drawable/pref_icon_search_type"
             app:key="KEY_FILTER_FIELD"
-            app:title="@string/searchType" />
+            app:title="@string/searchType"
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             app:icon="@drawable/pref_icon_sorting"
             app:key="KEY_SORTING"
-            app:title="@string/sorting" />
+            app:title="@string/sorting"
+            app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
